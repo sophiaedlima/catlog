@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "CatLog",
+    "slug": "catlog",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "br.com.catlog",
+      "adaptiveIcon": {
+        "backgroundColor": "#1B2A41",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-sqlite",
+      "expo-secure-store",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 180,
+          "backgroundColor": "#F3F1EA"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 29,
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "O CatLog usa a câmera para tirar fotos dos gatos e dos relatórios de visita.",
+          "photosPermission": "O CatLog usa a galeria para você escolher a foto do seu gato.",
+          "microphonePermission": false
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "O CatLog usa sua localização para comprovar a chegada ao endereço da visita."
+        }
+      ],
+      "expo-notifications",
+      "@react-native-community/datetimepicker",
+      "./plugins/comCaminhosCurtos"
+    ]
+  }
+}
