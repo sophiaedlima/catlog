@@ -67,51 +67,73 @@ O aplicativo é aberto a qualquer pessoa: basta criar uma conta gratuita e escol
 catlog/
 ├── mobile/     aplicativo React Native
 ├── backend/    API Spring Boot
-├── docs/       documentação, diagramas e protótipo navegável
 └── README.md
 ```
 
 ## Como executar
 
-Pré-requisitos: Node.js 20 ou superior, JDK 21, PostgreSQL 16 e o aplicativo Expo Go no celular.
+Pré-requisitos: Node.js 20 ou superior, JDK 21 ou superior e Android Studio com um emulador ou celular Android 10 ou superior.
 
 **API**
 
 ```bash
 cd backend
-cp .env.example .env     # preencha as variáveis de ambiente
-./mvnw spring-boot:run
+cp .env.example .env     # defina JWT_SEGREDO
+./mvnw spring-boot:run   # no Windows: mvnw.cmd spring-boot:run
 ```
 
-A API sobe em `http://localhost:8080`.
+A API sobe em `http://localhost:8080`. Com o perfil `dev`, já definido no `.env.example`, ela usa um PostgreSQL embutido e cria dados de teste, sem instalar nada. Esses dados recomeçam a cada inicialização. Para usar um PostgreSQL 16 próprio, apague a linha `spring.profiles.active=dev` e preencha `DB_URL`, `DB_USUARIO` e `DB_SENHA`.
 
-**Aplicativo**
+Testes automatizados da API: `./mvnw test`.
+
+**Aplicativo no Android Studio**
 
 ```bash
 cd mobile
 npm install
 cp .env.example .env     # informe o endereço da API
-npx expo start
+npx expo prebuild --platform android
+npx expo start           # deixe rodando
 ```
 
-Leia o QR Code com o Expo Go ou use um emulador Android.
+No Android Studio, use **File > Open**, escolha a pasta `mobile/android`, espere a sincronização do Gradle, selecione o emulador e clique em **Run**. A pasta `android` é gerada pelo comando `prebuild` e não vai para o Git.
+
+Se preferir não abrir o Android Studio, `npx expo run:android` compila e abre o aplicativo no emulador.
+
+**APK para instalar no celular**
+
+```bash
+cd mobile/android
+./gradlew assembleRelease   # no Windows: gradlew.bat assembleRelease
+```
+
+O arquivo fica em `mobile/android/app/build/outputs/apk/release/app-release.apk`. O endereço da API é gravado no APK durante a compilação, a partir do `EXPO_PUBLIC_API_URL` do `.env`:
+
+- celular no mesmo Wi-Fi do computador: `http://IP_DO_COMPUTADOR:8080` (o IP aparece com `ipconfig`)
+- celular ligado por cabo: `http://127.0.0.1:8080`, depois de rodar `adb reverse tcp:8080 tcp:8080`
+
+Se o Android perguntar se o CatLog pode acessar dispositivos da rede local, permita: é assim que o aplicativo fala com a API no computador.
 
 **Credenciais de teste**
 
-| Perfil | E-mail | Senha |
-|--------|--------|-------|
-| Tutor | (a definir) | (a definir) |
-| Cuidador | (a definir) | (a definir) |
+Criadas somente no perfil `dev`. A senha é o valor de `CATLOG_SENHA_TESTE` no `.env`, por padrão `catlog2026`.
+
+| Perfil | E-mail |
+|--------|--------|
+| Tutor | cleide@email.com |
+| Cuidador | felipe@email.com |
+
+Para testar o check-in no emulador, a visita de demonstração começa 5 minutos depois de a API subir. Coloque o GPS no endereço dela com `adb emu geo fix -49.2670 -16.7050`.
 
 ## Protótipo navegável
 
-O protótipo das telas do tutor está em `docs/prototipo/`. Abra o arquivo HTML no navegador, sem necessidade de instalar nada.
+O protótipo das telas do tutor é o arquivo `PI2026-2_Catlog_Prototipo.html`, na raiz do repositório. Abra no navegador, sem necessidade de instalar nada.
 
 ## Documentação
 
-- Documento de projeto (etapa N1): `docs/`
-- Diagramas de modelagem e arquitetura: `docs/diagramas/`
-- Backlog priorizado e verificação de escopo: `docs/`
+- Documento de projeto (etapa N1): `PI2026-2_Catlog_Documentação.pdf`
+- Backlog priorizado e verificação de escopo: `PI2026-2_Catlog_Checkpoint1.xlsx`
+- Roteiro de testes funcionais e defeitos encontrados: `docs/roteiro-de-testes.md`
 
 ## Equipe
 

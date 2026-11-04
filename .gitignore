@@ -1,0 +1,23 @@
+# Segredos e configurações locais
+.env
+.env.local
+
+# API
+backend/target/
+backend/uploads/
+
+# Aplicativo
+mobile/node_modules/
+mobile/.expo/
+mobile/dist/
+mobile/android/
+mobile/ios/
+*.apk
+*.aab
+
+# IDEs e sistema
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
