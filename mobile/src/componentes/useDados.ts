@@ -1,5 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useConexao } from '../contexto/ConexaoContext';
 import { Resultado } from '../servicos/comCopiaLocal';
 
 /** Carrega os dados toda vez que a tela volta ao foco e expõe os estados pedidos na RNF10. */
@@ -36,6 +37,16 @@ export function useDados<T>(carregar: () => Promise<Resultado<T>>) {
       recarregar();
     }, [recarregar]),
   );
+
+  // Quando a fila de envios sem internet diminui, a API mudou: busca de novo.
+  const { pendentes } = useConexao();
+  const pendentesAntes = useRef(pendentes);
+  useEffect(() => {
+    if (pendentes < pendentesAntes.current) {
+      recarregar();
+    }
+    pendentesAntes.current = pendentes;
+  }, [pendentes, recarregar]);
 
   return { dados, carregando, erro, daCopiaLocal, recarregar };
 }
