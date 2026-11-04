@@ -54,7 +54,7 @@ export function AvisoDeConexao() {
   const texto = !online
     ? pendentes > 0
       ? `Sem internet. ${pendentes} ${pendentes === 1 ? 'envio aguardando' : 'envios aguardando'} a conexão voltar.`
-      : 'Sem internet. Você está vendo os últimos dados salvos.'
+      : 'Sem conexão com o servidor. O que aparece aqui pode estar desatualizado.'
     : 'Enviando o que ficou guardado no celular...';
   return (
     <View style={estilos.avisoConexao} accessibilityRole="alert">

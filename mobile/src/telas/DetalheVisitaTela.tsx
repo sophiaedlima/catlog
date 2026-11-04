@@ -20,6 +20,7 @@ import {
   dataCurta,
   descricaoDoGato,
   diaEHora,
+  mascararTelefone,
   periodoDaVisita,
   TEXTO_SITUACAO_SAUDE,
   TEXTO_SITUACAO_VISITA,
@@ -115,7 +116,7 @@ export function DetalheVisitaTela({ route, navigation }: PropsTela<'DetalheVisit
     <Tela atualizando={carregando} aoAtualizar={recarregar}>
       <Bloco
         titulo={periodoDaVisita(visita.inicio, visita.fim)}
-        info={`${ehCuidador ? `Tutor: ${visita.tutor.nome}, ${visita.tutor.telefone}` : `Cuidador: ${visita.cuidador.nome}, ${visita.cuidador.telefone}`}\n${visita.endereco.logradouro}, ${visita.endereco.numero}, ${visita.endereco.bairro}, ${visita.endereco.cidade}`}
+        info={`${ehCuidador ? `Tutor: ${visita.tutor.nome}, ${mascararTelefone(visita.tutor.telefone)}` : `Cuidador: ${visita.cuidador.nome}, ${mascararTelefone(visita.cuidador.telefone)}`}\n${visita.endereco.logradouro}, ${visita.endereco.numero}, ${visita.endereco.bairro}, ${visita.endereco.cidade}`}
         direita={<Rotulo texto={TEXTO_SITUACAO_VISITA[visita.situacao]} tom={TOM_SITUACAO_VISITA[visita.situacao]} />}
       />
       {visita.aguardandoEnvio ? <Nota titulo="Aguardando internet">O que você registrou está salvo no celular e será enviado quando a conexão voltar.</Nota> : null}

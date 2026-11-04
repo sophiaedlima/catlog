@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Text, View } from 'react-native';
-import { Botao, Campo, estilos, Intro, LogoGato, Nota, Tela } from '../componentes/Interface';
+import { Botao, Campo, estilos, LogoGato, Nota, Tela } from '../componentes/Interface';
 import { useSessao } from '../contexto/SessaoContext';
 import { PropsTela } from '../navegacao/rotas';
 import { entrar } from '../servicos/contaServico';
@@ -36,7 +36,9 @@ export function LoginTela({ navigation }: PropsTela<'Login'>) {
         <Text style={{ fontFamily: fontes.titulo, fontSize: 26, marginTop: 8 }} accessibilityRole="header">
           CatLog
         </Text>
-        <Intro>A saúde dos seus gatos e as visitas do cuidador em um só lugar.</Intro>
+        <Text style={[estilos.intro, { textAlign: 'center' }]}>
+          A saúde dos seus gatos e as visitas do cuidador em um só lugar.
+        </Text>
       </View>
       <Campo rotulo="E-mail" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" autoComplete="email" />
       <Campo rotulo="Senha" value={senha} onChangeText={setSenha} secureTextEntry autoComplete="password" />

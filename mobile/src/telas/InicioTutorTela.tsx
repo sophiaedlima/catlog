@@ -26,8 +26,8 @@ function resumoDosAlertas(vencidos: number, aVencer: number, temVisita: boolean)
   const partes: string[] = [];
   if (vencidos) partes.push(`${vencidos} ${vencidos === 1 ? 'cuidado atrasado' : 'cuidados atrasados'}`);
   if (aVencer) partes.push(`${aVencer} a vencer`);
-  partes.push(temVisita ? '1 visita marcada' : 'nenhuma visita marcada');
-  return `Você tem ${partes.join(', ')}.`;
+  const saude = partes.length ? `Você tem ${partes.join(' e ')}.` : 'Os cuidados de saúde estão em dia.';
+  return `${saude} ${temVisita ? 'A próxima visita já está marcada.' : 'Nenhuma visita marcada.'}`;
 }
 
 export function InicioTutorTela() {

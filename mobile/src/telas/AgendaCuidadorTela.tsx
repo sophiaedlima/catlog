@@ -95,7 +95,7 @@ export function AgendaCuidadorTela() {
               : `${resumo.dados.visitasHoje.length} ${resumo.dados.visitasHoje.length === 1 ? 'visita' : 'visitas'} hoje.`}
             {resumo.dados.pendentes > 0 ? ` ${resumo.dados.pendentes} ${resumo.dados.pendentes === 1 ? 'pedido aguarda' : 'pedidos aguardam'} sua resposta.` : ''}
           </Intro>
-          <View style={[estilos.entre, { marginBottom: 8 }]} accessible accessibilityLabel={`Neste mês: ${resumo.dados.concluidasMes} visitas concluídas e ${resumo.dados.agendadasMes} agendadas.`}>
+          <View style={[estilos.entre, { marginBottom: 8 }]} accessible accessibilityLabel={`Neste mês: ${resumo.dados.concluidasMes} ${resumo.dados.concluidasMes === 1 ? 'visita concluída' : 'visitas concluídas'} e ${resumo.dados.agendadasMes} ${resumo.dados.agendadasMes === 1 ? 'agendada' : 'agendadas'}.`}>
             <Indicador valor={resumo.dados.concluidasMes} texto="concluídas no mês" />
             <Indicador valor={resumo.dados.agendadasMes} texto="agendadas no mês" />
           </View>
