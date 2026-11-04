@@ -1,3 +1,4 @@
+import { File } from 'expo-file-system';
 import { api } from '../dados/api';
 import { lerDoGato, lerLinhas, substituirDoGato, substituirLinhas } from '../dados/bancoLocal';
 import {
@@ -107,7 +108,8 @@ export function excluirPeso(gatoId: number, id: number) {
 
 export async function enviarFoto(uri: string): Promise<string> {
   const formulario = new FormData();
-  formulario.append('arquivo', { uri, name: 'foto.jpg', type: 'image/jpeg' } as unknown as Blob);
+  // O fetch do Expo não aceita o formato { uri } do React Native; o File do expo-file-system funciona como Blob.
+  formulario.append('arquivo', new File(uri));
   const { url } = await api.post<{ url: string }>('/api/fotos', formulario);
   return url;
 }
