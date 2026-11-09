@@ -1,10 +1,10 @@
 # Roteiro de testes funcionais
 
-Execução de 04/11/2026, feita com apoio de IA (Claude Code), que digitou e tocou na tela por comandos do Android. A equipe deve repetir o roteiro por conta própria antes da N2, e o resultado desta execução precisa constar na declaração de uso de IA do relatório final.
+Execução de 04/11/2026, com reteste em 09/11/2026, feita com apoio de IA (Claude Code), que digitou e tocou na tela por comandos do Android. A equipe deve repetir o roteiro por conta própria antes da N2, e o resultado desta execução precisa constar na declaração de uso de IA do relatório final.
 
-**Ambiente:** APK release no emulador Pixel 8 (Android 17), API no perfil `dev` com os dados de teste, ligada ao emulador por `adb reverse`. Senha das contas de teste: valor de `CATLOG_SENHA_TESTE`.
+**Ambiente:** APK release no emulador Pixel 8 (Android 17), API no perfil `dev` com os dados de teste, ligada ao emulador por `adb reverse`. O projeto não terá teste em celular físico: tudo é demonstrado no emulador. Senha das contas de teste: valor de `CATLOG_SENHA_TESTE`.
 
-**Ainda não testado:** celular físico (R14), escolha de foto da galeria, cadastro de conta pela tela, edição e exclusão de cuidados de saúde pela tela, Cloudinary, sessões de usabilidade com 5 usuários externos.
+**Ainda não testado:** escolha de foto da galeria, cadastro de conta pela tela, edição e exclusão de cuidados de saúde pela tela, Cloudinary, sessões de usabilidade com 5 usuários externos.
 
 ## Aplicativo
 
@@ -29,6 +29,7 @@ Execução de 04/11/2026, feita com apoio de IA (Claude Code), que digitou e toc
 | CT17 | Cuidador | Modo avião e navegar pela agenda e pelo perfil | Aviso de sem conexão e últimos dados salvos | Conforme esperado |
 | CT18 | Tutor | Abrir a visita concluída | Relatório com tarefas, observação e foto | Conforme esperado |
 | CT19 | Tutor | Aceite, check-in e conclusão feitos pelo cuidador | Notificações no celular do tutor | Conforme esperado |
+| CT20 | Cuidador | Sem conexão com a API: check-in, tarefas, foto e Concluir; depois a conexão volta | Check-in e relatório ficam na fila ("2 envios aguardando") e a agenda mostra "Aguardando envio". Quando a conexão volta, tudo é enviado e a agenda se atualiza sozinha | Conforme esperado (reteste de 09/11) |
 
 ## API
 
@@ -39,10 +40,12 @@ Roteiro automatizado de 61 verificações pela rede, cobrindo contas, endereços
 | ID | Severidade | Descrição | Situação |
 |----|------------|-----------|----------|
 | D01 | Alta | Envio de fotos falhava com "Sem conexão com o servidor": o fetch do Expo 58 não aceita o formato `{ uri }` no FormData | Corrigido: o arquivo vai como `File` do expo-file-system |
-| D02 | Média | Depois de enviar a fila sem internet, a tela continuava com os dados antigos até puxar para atualizar | Corrigido, falta retestar no app: as telas recarregam quando a fila diminui |
-| D03 | Baixa | Início do tutor dizia "1 visita marcada" mesmo com mais visitas | Corrigido, falta retestar no app |
+| D02 | Média | Depois de enviar a fila sem internet, a tela continuava com os dados antigos até puxar para atualizar | Corrigido e retestado em 09/11 (CT20): as telas recarregam quando a fila diminui |
+| D03 | Baixa | Início do tutor dizia "1 visita marcada" mesmo com mais visitas | Corrigido e retestado em 09/11: "A próxima visita já está marcada." |
 | D04 | Baixa | Aviso de conexão dizia "últimos dados salvos" até na tela de login | Corrigido: texto neutro |
 | D05 | Baixa | Telefone sem máscara no detalhe da visita | Corrigido |
 | D06 | Baixa | Leitor de tela lia "1 visitas concluídas" na agenda do cuidador | Corrigido |
-| D07 | Baixa | Texto de apresentação desalinhado na tela de login | Corrigido, falta conferir na tela |
+| D07 | Baixa | Texto de apresentação desalinhado na tela de login | Corrigido e conferido na tela em 09/11 |
 | D08 | Baixa | A primeira requisição depois de a API ligar pode passar de 15 segundos no emulador e mostrar "sem conexão" | Sem correção: ocorre só com a API recém-iniciada; tentar de novo resolve |
+
+**Atenção para repetir o CT20 no emulador:** o modo avião não corta a API quando ela chega pelo `adb reverse`, porque o tráfego passa pelo cabo virtual do adb. Para simular a falta de conexão, ligue o modo avião e rode `adb kill-server` e depois `adb start-server`, sem refazer o `adb reverse`. Para a conexão voltar, rode `adb reverse tcp:8080 tcp:8080` e desligue o modo avião.
