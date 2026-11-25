@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/32391768/README.md)
 # CatLog
 
 Aplicativo móvel para acompanhamento da saúde de gatos domésticos e agendamento de visitas de cuidadores (cat sitters).
@@ -134,6 +133,7 @@ O protótipo das telas do tutor é o arquivo `PI2026-2_Catlog_Prototipo.html`, n
 - Documento de projeto (etapa N1): `PI2026-2_Catlog_Documentação.pdf`
 - Backlog priorizado e verificação de escopo: `PI2026-2_Catlog_Checkpoint1.xlsx`
 - Roteiro de testes funcionais e defeitos encontrados: `docs/roteiro-de-testes.md`
+- Roteiro das sessões de usabilidade: `docs/roteiro-de-usabilidade.md`
 
 ## Equipe
 
@@ -145,7 +145,7 @@ O protótipo das telas do tutor é o arquivo `PI2026-2_Catlog_Prototipo.html`, n
 
 ## Situação do projeto
 
-Em desenvolvimento. Concepção concluída, implementação em andamento no Ciclo 1.
+Versão beta concluída e testada no emulador (roteiro de testes funcionais). Em andamento: sessões de usabilidade e relatório técnico final.
 
 ## Licença
 
