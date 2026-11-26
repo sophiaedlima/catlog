@@ -134,6 +134,7 @@ O protótipo das telas do tutor é o arquivo `PI2026-2_Catlog_Prototipo.html`, n
 - Backlog priorizado e verificação de escopo: `PI2026-2_Catlog_Checkpoint1.xlsx`
 - Roteiro de testes funcionais e defeitos encontrados: `docs/roteiro-de-testes.md`
 - Roteiro das sessões de usabilidade: `docs/roteiro-de-usabilidade.md`
+- Roteiro da apresentação final e perguntas da arguição: `docs/roteiro-apresentacao-n2.md`
 
 ## Equipe
 
