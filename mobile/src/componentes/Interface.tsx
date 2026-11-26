@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -14,6 +14,8 @@ import {
   View,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { BottomTabBarHeightContext } from '@react-navigation/bottom-tabs';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { useConexao } from '../contexto/ConexaoContext';
 import { urlDaFoto } from '../dados/api';
@@ -29,12 +31,18 @@ export function Tela({
   atualizando?: boolean;
   aoAtualizar?: () => void;
 }) {
+  // Fora das abas, a tela vai até a borda de baixo (Android 15+). Sem esta folga,
+  // o último botão fica escondido atrás da barra de navegação do sistema.
+  const insets = useSafeAreaInsets();
+  const dentroDasAbas = useContext(BottomTabBarHeightContext) !== undefined;
+  const folgaInferior = dentroDasAbas ? 0 : insets.bottom;
+
   return (
     <KeyboardAvoidingView style={estilos.preencher} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <AvisoDeConexao />
       <ScrollView
         style={estilos.tela}
-        contentContainerStyle={estilos.conteudo}
+        contentContainerStyle={[estilos.conteudo, { paddingBottom: 32 + folgaInferior }]}
         keyboardShouldPersistTaps="handled"
         refreshControl={
           aoAtualizar ? <RefreshControl refreshing={!!atualizando} onRefresh={aoAtualizar} colors={[cores.verde]} /> : undefined

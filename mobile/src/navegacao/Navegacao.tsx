@@ -2,7 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNavigationContainerRef, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useEffect } from 'react';
-import { AppState } from 'react-native';
+import { AppState, Text } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { useSessao } from '../contexto/SessaoContext';
 import { sincronizar } from '../servicos/filaServico';
@@ -86,31 +87,54 @@ function IconeAba({ nome, cor }: { nome: 'inicio' | 'gatos' | 'busca' | 'perfil'
   );
 }
 
-const opcoesAbas = {
-  ...opcoesCabecalho,
-  tabBarActiveTintColor: cores.verde,
-  tabBarInactiveTintColor: cores.tintaSuave,
-  tabBarLabelStyle: { fontSize: 12, fontWeight: '600' as const },
-  tabBarStyle: { backgroundColor: cores.papel, borderTopColor: cores.linha, borderTopWidth: 2 },
-  sceneStyle: { backgroundColor: cores.fundo },
-};
+// Rótulo das abas: cresce com a letra grande do celular só até 30% e, se não couber,
+// diminui para caber numa linha (antes ficava cortado embaixo ou com "...").
+function rotuloAba(texto: string) {
+  return ({ color }: { color: string }) => (
+    <Text
+      numberOfLines={1}
+      adjustsFontSizeToFit
+      maxFontSizeMultiplier={1.3}
+      style={{ color, fontSize: 12, fontWeight: '600', textAlign: 'center' }}
+    >
+      {texto}
+    </Text>
+  );
+}
+
+function useOpcoesAbas() {
+  const insets = useSafeAreaInsets();
+  return {
+    ...opcoesCabecalho,
+    tabBarActiveTintColor: cores.verde,
+    tabBarInactiveTintColor: cores.tintaSuave,
+    tabBarStyle: {
+      backgroundColor: cores.papel,
+      borderTopColor: cores.linha,
+      borderTopWidth: 2,
+      height: 64 + insets.bottom,
+      paddingTop: 6,
+    },
+    sceneStyle: { backgroundColor: cores.fundo },
+  };
+}
 
 function AbasTutor() {
   return (
-    <Abas.Navigator screenOptions={opcoesAbas}>
-      <Abas.Screen name="Inicio" component={InicioTutorTela} options={{ title: 'Início', tabBarIcon: ({ color }) => <IconeAba nome="inicio" cor={color} /> }} />
-      <Abas.Screen name="Gatos" component={MeusGatosTela} options={{ title: 'Meus gatos', tabBarLabel: 'Gatos', tabBarIcon: ({ color }) => <IconeAba nome="gatos" cor={color} /> }} />
-      <Abas.Screen name="Cuidadores" component={BuscarCuidadoresTela} options={{ title: 'Buscar cuidadores', tabBarLabel: 'Cuidadores', tabBarIcon: ({ color }) => <IconeAba nome="busca" cor={color} /> }} />
-      <Abas.Screen name="Perfil" component={MeuPerfilTela} options={{ title: 'Meu perfil', tabBarLabel: 'Perfil', tabBarIcon: ({ color }) => <IconeAba nome="perfil" cor={color} /> }} />
+    <Abas.Navigator screenOptions={useOpcoesAbas()}>
+      <Abas.Screen name="Inicio" component={InicioTutorTela} options={{ title: 'Início', tabBarLabel: rotuloAba('Início'), tabBarIcon: ({ color }) => <IconeAba nome="inicio" cor={color} /> }} />
+      <Abas.Screen name="Gatos" component={MeusGatosTela} options={{ title: 'Meus gatos', tabBarLabel: rotuloAba('Gatos'), tabBarIcon: ({ color }) => <IconeAba nome="gatos" cor={color} /> }} />
+      <Abas.Screen name="Cuidadores" component={BuscarCuidadoresTela} options={{ title: 'Buscar cuidadores', tabBarLabel: rotuloAba('Cuidadores'), tabBarIcon: ({ color }) => <IconeAba nome="busca" cor={color} /> }} />
+      <Abas.Screen name="Perfil" component={MeuPerfilTela} options={{ title: 'Meu perfil', tabBarLabel: rotuloAba('Perfil'), tabBarIcon: ({ color }) => <IconeAba nome="perfil" cor={color} /> }} />
     </Abas.Navigator>
   );
 }
 
 function AbasCuidador() {
   return (
-    <Abas.Navigator screenOptions={opcoesAbas}>
-      <Abas.Screen name="Agenda" component={AgendaCuidadorTela} options={{ title: 'Minha agenda', tabBarLabel: 'Agenda', tabBarIcon: ({ color }) => <IconeAba nome="agenda" cor={color} /> }} />
-      <Abas.Screen name="Perfil" component={MeuPerfilTela} options={{ title: 'Meu perfil', tabBarLabel: 'Perfil', tabBarIcon: ({ color }) => <IconeAba nome="perfil" cor={color} /> }} />
+    <Abas.Navigator screenOptions={useOpcoesAbas()}>
+      <Abas.Screen name="Agenda" component={AgendaCuidadorTela} options={{ title: 'Minha agenda', tabBarLabel: rotuloAba('Agenda'), tabBarIcon: ({ color }) => <IconeAba nome="agenda" cor={color} /> }} />
+      <Abas.Screen name="Perfil" component={MeuPerfilTela} options={{ title: 'Meu perfil', tabBarLabel: rotuloAba('Perfil'), tabBarIcon: ({ color }) => <IconeAba nome="perfil" cor={color} /> }} />
     </Abas.Navigator>
   );
 }

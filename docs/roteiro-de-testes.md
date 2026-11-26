@@ -2,7 +2,7 @@
 
 Execução de 04/11/2026, com reteste em 09/11/2026, feita com apoio de IA (Claude Code), que digitou e tocou na tela por comandos do Android. A equipe deve repetir o roteiro por conta própria antes da N2, e o resultado desta execução precisa constar na declaração de uso de IA do relatório final.
 
-**Ambiente:** APK release no emulador Pixel 8 (Android 17), API no perfil `dev` com os dados de teste, ligada ao emulador por `adb reverse`. O projeto não terá teste em celular físico: tudo é demonstrado no emulador. Senha das contas de teste: valor de `CATLOG_SENHA_TESTE`.
+**Ambiente:** APK release no emulador Pixel 8 (Android 17), API no perfil `dev` com os dados de teste, ligada ao emulador por `adb reverse`. Em 26/11 o APK também foi usado em um celular Android físico, ligado à API pela internet (veja "Teste em celular físico"). Senha das contas de teste: valor de `CATLOG_SENHA_TESTE`.
 
 **Ainda não testado:** escolha de foto da galeria, cadastro de conta pela tela, edição e exclusão de cuidados de saúde pela tela, Cloudinary, sessões de usabilidade com 5 usuários externos.
 
@@ -47,5 +47,12 @@ Roteiro automatizado de 61 verificações pela rede, cobrindo contas, endereços
 | D06 | Baixa | Leitor de tela lia "1 visitas concluídas" na agenda do cuidador | Corrigido |
 | D07 | Baixa | Texto de apresentação desalinhado na tela de login | Corrigido e conferido na tela em 09/11 |
 | D08 | Baixa | A primeira requisição depois de a API ligar pode passar de 15 segundos no emulador e mostrar "sem conexão" | Sem correção: ocorre só com a API recém-iniciada; tentar de novo resolve |
+| D09 | Média | Ao editar um cuidado de saúde dava para trocar o tipo (vacina, vermífugo, remédio): o mesmo item parecia ser três coisas diferentes e podia ser salvo com o tipo errado | Corrigido: na edição o tipo aparece só como texto; os botões de tipo ficam no cadastro novo |
+| D10 | Baixa | O exemplo em cinza do campo Instruções era de remédio ("Todos os dias às 8h...") até em vacina e vermífugo, e parecia já preenchido | Corrigido: exemplos começam com "Ex.:" e mudam conforme o tipo |
+| D11 | Média | No celular físico (Android 15 ou mais novo) os nomes das abas apareciam cortados e o último botão das telas (Salvar, Excluir, Cancelar visita) ficava atrás da barra de navegação do Android | Corrigido: abas mais altas com rótulo que se ajusta, e folga embaixo das telas fora das abas |
 
 **Atenção para repetir o CT20 no emulador:** o modo avião não corta a API quando ela chega pelo `adb reverse`, porque o tráfego passa pelo cabo virtual do adb. Para simular a falta de conexão, ligue o modo avião e rode `adb kill-server` e depois `adb start-server`, sem refazer o `adb reverse`. Para a conexão voltar, rode `adb reverse tcp:8080 tcp:8080` e desligue o modo avião.
+
+## Teste em celular físico
+
+**26/11/2026**, celular Android físico, APK release ligado à API pela internet (túnel da Cloudflare). Fluxos conferidos com prints na pasta `docs/prints-celular`: login, Início com alertas de saúde (RN04), lista de gatos, perfil do gato, carteira de saúde, edição de cuidado, registro de peso com gráfico (RN07), agenda e perfil do cuidador e detalhe da visita com o ciclo de situações (RN06). Outra integrante cadastrou um gato com foto pelo próprio celular, e a foto chegou à API. Defeitos encontrados: D09, D10 e D11.
