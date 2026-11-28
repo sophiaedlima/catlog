@@ -140,7 +140,7 @@ O protótipo das telas do tutor é o arquivo `PI2026-2_Catlog_Prototipo.html`, n
 | Integrante | Atribuição |
 |------------|------------|
 | Gabriel Brito Falcão | Repositório, aplicativo móvel e sincronização offline |
-| Hemily B. Ramos de Jesus | Interface, acessibilidade, recursos do dispositivo e testes |
+| Hemily B. de Jesus Ramos | Interface, acessibilidade, recursos do dispositivo e testes |
 | Sophia Eduarda Lima | Coordenação, API, regras de negócio e documentação |
 
 ## Situação do projeto
